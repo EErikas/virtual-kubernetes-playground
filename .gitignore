@@ -1,0 +1,3 @@
+.vagrant
+*.box
+.join_command.sh
