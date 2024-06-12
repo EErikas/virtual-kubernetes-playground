@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# unless Vagrant.has_plugin?("vagrant-vbguest")
+#     system("vagrant plugin install vagrant-vbguest")
+# end
+
+# unless Vagrant.has_plugin?("vagrant-reload")
+#     system("vagrant plugin install vagrant-reload")
+# end
+
+# system("vagrant vbguest --do install")
+
+Vagrant.configure("2") do |config|
+    config.vm.define "base" do |base|
+        base.vm.box = "bento/debian-12"
+        base.vbguest.auto_update = false
+        base.ssh.insert_key = false
+        base.vm.provision "ansible" do |ansible|
+            ansible.playbook = "../playbooks/base-playbook.yml"
+        end
+    end
+end

@@ -1,0 +1,18 @@
+---
+- name: Set up worker node
+  hosts: all
+  become: true
+  tasks:
+  - name: Copy join command to node machine
+    copy:
+      src: "{{ playbook_dir }}/.join_command.sh"
+      dest: /home/vagrant/join_command.sh
+      owner: root
+      mode: '0755'
+
+  - name: Execute join command
+    command: bash /home/vagrant/join_command.sh
+
+  handlers:
+    - name: docker status
+      service: name=docker state=started
